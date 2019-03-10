@@ -76,7 +76,7 @@ func Test_totalPage(t *testing.T) {
 	}
 }
 
-func TestPaging(t *testing.T) {
+func TestPagePagination(t *testing.T) {
 	for i := 0; i < 11; i++ {
 		a := &A{
 			Test: i,
@@ -115,7 +115,7 @@ func TestPaging(t *testing.T) {
 
 	for _, tc := range testCases {
 		out := make([]A, 0)
-		pp := Paging(tc.ReqDB, tc.ReqPage, tc.ReqLimit, &out)
+		pp := PagePagination(tc.ReqDB, tc.ReqPage, tc.ReqLimit, &out)
 
 		if pp.TotalPage != tc.TotalPage {
 			t.Errorf("p: %#v, TotalPage want: %d, got: %d", pp, tc.TotalPage, pp.TotalPage)

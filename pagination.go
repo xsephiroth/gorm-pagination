@@ -6,8 +6,8 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-// Paginator is a django drf like response
-type Paginator struct {
+// Response is a json response struct
+type Response struct {
 	Total     int         `json:"total"`
 	TotalPage int         `json:"total_page"`
 	Page      int         `json:"page"`
@@ -16,11 +16,12 @@ type Paginator struct {
 	Results   interface{} `json:"results"`
 }
 
-// Paging implement a PagePagination
+// PagePagination accept page and page_size params,
+// use gorm limit and offset implement pagination
 // page: request page
 // size: page items size
 // out: gorm.DB.Find(&out)
-func Paging(db *gorm.DB, page int, size int, out interface{}) *Paginator {
+func PagePagination(db *gorm.DB, page int, size int, out interface{}) *Response {
 	// setup default size
 	if size == 0 {
 		size = 10
@@ -43,7 +44,7 @@ func Paging(db *gorm.DB, page int, size int, out interface{}) *Paginator {
 	offset := (page - 1) * size
 	query(db, offset, size, out)
 
-	return &Paginator{
+	return &Response{
 		Total:     total,
 		TotalPage: tpage,
 		Page:      page,
