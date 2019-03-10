@@ -5,6 +5,11 @@ gorm-pagination
 go get github.com/xsephiroth/gorm-pagination
 ```
 
+### TEST
+```
+make test
+```
+
 ### USAGE
 example/example.go
 ```
