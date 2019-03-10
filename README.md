@@ -40,7 +40,7 @@ func main() {
 
 	tx := db.Model(&User{}).Where("active = ?", true)
 	users := make([]User, 0)
-	p := pagination.Paging(tx, 2, 10, &users)
-	fmt.Printf("%#v\n", p)
+	resp := pagination.PagePagination(tx, 2, 10, &users)
+	fmt.Printf("%#v\n", resp)
 }
 ```
