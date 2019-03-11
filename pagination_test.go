@@ -146,25 +146,21 @@ type A struct {
 	Test int
 }
 
-func createTestSqlite(sq string) (db *gorm.DB) {
+func createTestSqlite() (db *gorm.DB) {
 	var err error
-	db, err = gorm.Open("sqlite3", sq)
+	db, err = gorm.Open("sqlite3", ":memory:")
 	if err != nil {
 		panic(err)
 	}
 	return
 }
 func TestMain(m *testing.M) {
-	sq := "./test.db"
-	os.Remove(sq)
-
-	db := createTestSqlite(sq)
+	db := createTestSqlite()
 	defer db.Close()
 
 	testDB = db
 	testDB.CreateTable(&A{})
 
 	r := m.Run()
-	os.Remove(sq)
 	os.Exit(r)
 }
