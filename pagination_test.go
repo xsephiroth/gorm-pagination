@@ -101,13 +101,13 @@ func TestPagePagination(t *testing.T) {
 		Next       bool
 		ResultsLen int
 	}{
-		{db1, 0, 5, 3, 11, 1, false, true, 5}, // req page is 0, ishould correct page to 1
+		{db1, 0, 5, 3, 11, 1, false, true, 5}, // req page is 0, should correct page to 1
 		{db1, 1, 5, 3, 11, 1, false, true, 5}, // req page is 1
 		{db1, 2, 5, 3, 11, 2, true, true, 5},  // req page is 2
 		{db1, 3, 5, 3, 11, 3, true, false, 1}, // req page is 3, should got 1 result
 		{db1, 4, 5, 3, 11, 3, true, false, 1}, // req page is out of 3, should correct page to 3
 
-		{db2, 0, 5, 2, 6, 1, false, true, 5}, // req page is 0, ishould correct page to 1
+		{db2, 0, 5, 2, 6, 1, false, true, 5}, // req page is 0, should correct page to 1
 		{db2, 1, 5, 2, 6, 1, false, true, 5}, // req page is 1
 		{db2, 2, 5, 2, 6, 2, true, false, 1}, // req page is 2
 		{db2, 3, 5, 2, 6, 2, true, false, 1}, // req page is 3, should correct page to 1
