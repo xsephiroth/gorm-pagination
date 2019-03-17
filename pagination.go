@@ -8,12 +8,11 @@ import (
 
 // Response is a json response struct
 type Response struct {
-	Total     int         `json:"total"`
-	TotalPage int         `json:"total_page"`
-	Page      int         `json:"page"`
-	Next      bool        `json:"next"`
-	Prev      bool        `json:"prev"`
-	Results   interface{} `json:"results"`
+	Total     *int  `json:"total,omitempty"`
+	TotalPage *int  `json:"total_page,omitempty"`
+	Page      *int  `json:"page,omitempty"`
+	Next      *bool `json:"next,omitempty"`
+	Prev      *bool `json:"prev,omitempty"`
 }
 
 // PagePagination accept page and page_size params,
@@ -44,13 +43,15 @@ func PagePagination(db *gorm.DB, page int, size int, out interface{}) *Response 
 	offset := (page - 1) * size
 	query(db, offset, size, out)
 
+	hn := hasNext(total, offset, size)
+	hp := hasPrev(tpage, page)
+
 	return &Response{
-		Total:     total,
-		TotalPage: tpage,
-		Page:      page,
-		Next:      hasNext(total, offset, size),
-		Prev:      hasPrev(tpage, page),
-		Results:   out,
+		Total:     &total,
+		TotalPage: &tpage,
+		Page:      &page,
+		Next:      &hn,
+		Prev:      &hp,
 	}
 }
 

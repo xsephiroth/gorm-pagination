@@ -117,25 +117,20 @@ func TestPagePagination(t *testing.T) {
 		out := make([]A, 0)
 		pp := PagePagination(tc.ReqDB, tc.ReqPage, tc.ReqLimit, &out)
 
-		if pp.TotalPage != tc.TotalPage {
+		if *pp.TotalPage != tc.TotalPage {
 			t.Errorf("p: %#v, TotalPage want: %d, got: %d", pp, tc.TotalPage, pp.TotalPage)
 		}
-		if pp.Total != tc.Total {
+		if *pp.Total != tc.Total {
 			t.Errorf("p: %#v, Total want: %d, got: %d", pp, tc.Total, pp.Total)
 		}
-		if pp.Page != tc.Page {
+		if *pp.Page != tc.Page {
 			t.Errorf("p: %#v, Page want: %d, got: %d", pp, tc.Page, pp.Page)
 		}
-		if pp.Next != tc.Next {
+		if *pp.Next != tc.Next {
 			t.Errorf("p: %#v, want next: %v, got: %v", pp, tc.Next, pp.Next)
 		}
-		if pp.Prev != tc.Prev {
+		if *pp.Prev != tc.Prev {
 			t.Errorf("p: %#v, want prev: %v, got: %v", pp, tc.Prev, pp.Prev)
-		}
-
-		results := pp.Results.(*[]A)
-		if len(*results) != tc.ResultsLen {
-			t.Errorf("p: %#v, results should be %d, got: %d", pp, tc.ResultsLen, len(*results))
 		}
 	}
 
