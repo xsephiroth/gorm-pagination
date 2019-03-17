@@ -43,7 +43,7 @@ func PagePagination(db *gorm.DB, page int, size int, out interface{}) *Response 
 	offset := (page - 1) * size
 	query(db, offset, size, out)
 
-	hn := HasNext(total, offset, size)
+	hn := HasNext(totalPage, page)
 	hp := HasPrev(totalPage, page)
 
 	return &Response{
@@ -59,8 +59,8 @@ func query(db *gorm.DB, offset int, limit int, out interface{}) *gorm.DB {
 	return db.Offset(offset).Limit(limit).Find(out)
 }
 
-func HasNext(total int, offset int, limit int) bool {
-	return offset+limit < total
+func HasNext(totalPage, page int) bool {
+	return totalPage > page
 }
 
 func HasPrev(totalPage, page int) bool {

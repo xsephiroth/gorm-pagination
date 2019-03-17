@@ -12,25 +12,21 @@ var testDB *gorm.DB
 
 func Test_HasNext(t *testing.T) {
 	testCases := []struct {
-		total  int
-		offset int
-		limit  int
-		want   bool
+		totalPage int
+		page      int
+		want      bool
 	}{
-		{0, 0, 10, false},
-		{1, 0, 10, false},
-		{10, 0, 10, false},
-		{10, 10, 10, false},
-		{20, 10, 10, false},
-		{11, 0, 10, true},
-		{11, 10, 10, false},
+		{0, 1, false},
+		{1, 1, false},
+		{2, 1, true},
+		{2, 2, false},
 	}
 
 	for _, tc := range testCases {
-		got := HasNext(tc.total, tc.offset, tc.limit)
+		got := HasNext(tc.totalPage, tc.page)
 		if got != tc.want {
-			t.Errorf("total: %d, offset: %d, limit: %d, want: %v, got: %v",
-				tc.total, tc.offset, tc.limit, tc.want, got)
+			t.Errorf("totalPage: %d, page: %d, want: %v, got: %v",
+				tc.totalPage, tc.page, tc.want, got)
 		}
 	}
 }
