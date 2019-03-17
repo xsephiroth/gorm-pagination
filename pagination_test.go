@@ -10,7 +10,7 @@ import (
 
 var testDB *gorm.DB
 
-func Test_hasNext(t *testing.T) {
+func Test_HasNext(t *testing.T) {
 	testCases := []struct {
 		total  int
 		offset int
@@ -27,7 +27,7 @@ func Test_hasNext(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got := hasNext(tc.total, tc.offset, tc.limit)
+		got := HasNext(tc.total, tc.offset, tc.limit)
 		if got != tc.want {
 			t.Errorf("total: %d, offset: %d, limit: %d, want: %v, got: %v",
 				tc.total, tc.offset, tc.limit, tc.want, got)
@@ -35,7 +35,7 @@ func Test_hasNext(t *testing.T) {
 	}
 }
 
-func Test_hasPrev(t *testing.T) {
+func Test_HasPrev(t *testing.T) {
 	testCases := []struct {
 		totalPage int
 		page      int
@@ -47,7 +47,7 @@ func Test_hasPrev(t *testing.T) {
 		{2, 2, true},
 	}
 	for _, tc := range testCases {
-		got := hasPrev(tc.totalPage, tc.page)
+		got := HasPrev(tc.totalPage, tc.page)
 		if got != tc.want {
 			t.Errorf("total_page: %d, page: %d, want: %v, got: %v",
 				tc.totalPage, tc.page, tc.want, got)
@@ -68,7 +68,7 @@ func Test_totalPage(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		got := totalPage(tc.total, tc.limit)
+		got := TotalPage(tc.total, tc.limit)
 		if got != tc.want {
 			t.Errorf("total: %d, limit: %d, want: %d, got: %d",
 				tc.total, tc.limit, tc.want, got)

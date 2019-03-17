@@ -29,26 +29,26 @@ func PagePagination(db *gorm.DB, page int, size int, out interface{}) *Response 
 	// count total, with user setup where, before limit and offset
 	var total int
 	db.Count(&total)
-	tpage := totalPage(total, size)
+	totalPage := TotalPage(total, size)
 
 	// valid request page
 	if page == 0 {
 		page = 1
 	}
 	// page request <= total_page
-	if page > tpage {
-		page = tpage
+	if page > totalPage {
+		page = totalPage
 	}
 
 	offset := (page - 1) * size
 	query(db, offset, size, out)
 
-	hn := hasNext(total, offset, size)
-	hp := hasPrev(tpage, page)
+	hn := HasNext(total, offset, size)
+	hp := HasPrev(totalPage, page)
 
 	return &Response{
 		Total:     &total,
-		TotalPage: &tpage,
+		TotalPage: &totalPage,
 		Page:      &page,
 		Next:      &hn,
 		Prev:      &hp,
@@ -59,17 +59,17 @@ func query(db *gorm.DB, offset int, limit int, out interface{}) *gorm.DB {
 	return db.Offset(offset).Limit(limit).Find(out)
 }
 
-func hasNext(total int, offset int, limit int) bool {
+func HasNext(total int, offset int, limit int) bool {
 	return offset+limit < total
 }
 
-func hasPrev(totalPage, page int) bool {
+func HasPrev(totalPage, page int) bool {
 	if page <= 1 {
 		return false
 	}
 	return totalPage >= page
 }
 
-func totalPage(total int, limit int) int {
+func TotalPage(total int, limit int) int {
 	return int(math.Ceil(float64(total) / float64(limit)))
 }
